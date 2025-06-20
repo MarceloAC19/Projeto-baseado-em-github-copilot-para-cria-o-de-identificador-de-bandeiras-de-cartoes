@@ -32,8 +32,26 @@ std::string identificarBandeira(const std::string& numeroCartao) {
         return "Número de cartão muito curto para identificar.";
     }
 
+    // A ordem de verificação é importante. Regras mais específicas (prefixos longos)
+    // devem vir antes das mais genéricas (prefixos curtos).
+
+    // Hipercard: Começa com 606282
+    if (numeroCartao.rfind("606282", 0) == 0) {
+        return "Hipercard";
+    }
+    // Elo: Vários prefixos
+    else if (numeroCartao.rfind("636368", 0) == 0 || numeroCartao.rfind("438935", 0) == 0 ||
+             numeroCartao.rfind("504175", 0) == 0 || numeroCartao.rfind("451416", 0) == 0 ||
+             numeroCartao.rfind("636297", 0) == 0 || numeroCartao.rfind("5067", 0) == 0 ||
+             numeroCartao.rfind("4576", 0) == 0 || numeroCartao.rfind("4011", 0) == 0) {
+        return "Elo";
+    }
+    // Discover: Começa com 6011 ou 65
+    else if (numeroCartao.rfind("6011", 0) == 0 || numeroCartao.rfind("65", 0) == 0) {
+        return "Discover";
+    }
     // American Express: Começa com 34 ou 37
-    if (numeroCartao.substr(0, 2) == "34" || numeroCartao.substr(0, 2) == "37") {
+    else if (numeroCartao.substr(0, 2) == "34" || numeroCartao.substr(0, 2) == "37") {
         return "American Express";
     }
     // Mastercard: Começa com 51, 52, 53, 54 ou 55
@@ -48,25 +66,24 @@ std::string identificarBandeira(const std::string& numeroCartao) {
     else if (numeroCartao.substr(0, 2) == "36" || numeroCartao.substr(0, 2) == "38") {
         return "Diners Club";
     }
-    // Discover: Começa com 6011 ou 65
-    else if (numeroCartao.substr(0, 4) == "6011" || numeroCartao.substr(0, 2) == "65") {
-        return "Discover";
-    }
     // JCB: Começa com 35
     else if (numeroCartao.substr(0, 2) == "35") {
         return "JCB";
     }
-    // Elo: Vários prefixos
-    else if (numeroCartao.rfind("636368", 0) == 0 || numeroCartao.rfind("438935", 0) == 0 ||
-             numeroCartao.rfind("504175", 0) == 0 || numeroCartao.rfind("451416", 0) == 0 ||
-             numeroCartao.rfind("636297", 0) == 0 || numeroCartao.rfind("5067", 0) == 0 ||
-             numeroCartao.rfind("4576", 0) == 0 || numeroCartao.rfind("4011", 0) == 0) {
-        return "Elo";
+    // -------- INÍCIO DAS NOVAS BANDEIRAS --------
+    // Aura: Começa com 50
+    else if (numeroCartao.rfind("50", 0) == 0) {
+        return "Aura";
     }
-    // Hipercard: Começa com 606282
-    else if (numeroCartao.rfind("606282", 0) == 0) {
-        return "Hipercard";
+    // Maestro: Vários prefixos (ex: 5018, 5020, 5038)
+    else if (numeroCartao.rfind("5018", 0) == 0 || numeroCartao.rfind("5020", 0) == 0 || 
+             numeroCartao.rfind("5038", 0) == 0 || numeroCartao.rfind("5893", 0) == 0 ||
+             numeroCartao.rfind("6304", 0) == 0 || numeroCartao.rfind("6759", 0) == 0 ||
+             numeroCartao.rfind("6761", 0) == 0 || numeroCartao.rfind("6762", 0) == 0 ||
+             numeroCartao.rfind("6763", 0) == 0) {
+        return "Maestro";
     }
+    // -------- FIM DAS NOVAS BANDEIRAS --------
 
     // Se nenhum dos prefixos acima for encontrado
     return "Bandeira Desconhecida";
