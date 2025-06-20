@@ -48,7 +48,7 @@ Para usar este programa, você precisará de um compilador C++ (como o g++).
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO>
+    git clone <(https://github.com/MarceloAC19/Projeto-baseado-em-github-copilot-para-cria-o-de-identificador-de-bandeiras-de-cartoes.git)>
     cd <Projeto-baseado-em-github-copilot-para-cria-o-de-identificador-de-bandeiras-de-cartões
 >
     ```
