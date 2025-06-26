@@ -1,0 +1,121 @@
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+// --------------------------------------------------------------------------------
+// Function Documentation: identifyCardBrand
+//
+// Purpose:
+//   This function receives a credit card number as a string
+//   and identifies which brand it belongs to based on its starting digits.
+//
+// Parameters:
+//   - cardNumber (const std::string&): A constant reference to a string
+//     containing the credit card number to be checked. Using 'const'
+//     ensures that the function will not alter the original number, and using '&' (reference)
+//     avoids an unnecessary copy of the string, making the program more efficient.
+//
+// Return:
+//   - std::string: Returns the name of the card brand as a string.
+//     If the number does not match any known brand, it returns "Unknown Brand".
+//
+// How it works:
+//   The function uses a series of 'if' and 'else if' structures to check
+//   the prefixes of the 'cardNumber'. Each check uses the string's 'substr(start, length)'
+//   or 'rfind(prefix, 0)' methods to extract a portion of the number and compare it with the known
+//   prefixes for each card brand. The order of the checks is important to avoid conflicts
+//   between brands with prefixes of different lengths.
+// --------------------------------------------------------------------------------
+std::string identifyCardBrand(const std::string& cardNumber) {
+    // Check if the card number has a minimum length for analysis
+    if (cardNumber.length() < 4) {
+        return "Card number too short to identify.";
+    }
+
+    // The order of checks is important. More specific rules (longer prefixes)
+    // should come before more generic ones (shorter prefixes).
+
+    // Hipercard: Starts with 606282
+    if (cardNumber.rfind("606282", 0) == 0) {
+        return "Hipercard";
+    }
+    // Elo: Various prefixes
+    else if (cardNumber.rfind("636368", 0) == 0 || cardNumber.rfind("438935", 0) == 0 ||
+             cardNumber.rfind("504175", 0) == 0 || cardNumber.rfind("451416", 0) == 0 ||
+             cardNumber.rfind("636297", 0) == 0 || cardNumber.rfind("5067", 0) == 0 ||
+             cardNumber.rfind("4576", 0) == 0 || cardNumber.rfind("4011", 0) == 0) {
+        return "Elo";
+    }
+    // Discover: Starts with 6011 or 65
+    else if (cardNumber.rfind("6011", 0) == 0 || cardNumber.rfind("65", 0) == 0) {
+        return "Discover";
+    }
+    // American Express: Starts with 34 or 37
+    else if (cardNumber.substr(0, 2) == "34" || cardNumber.substr(0, 2) == "37") {
+        return "American Express";
+    }
+    // Mastercard: Starts with 51, 52, 53, 54, or 55
+    else if (stoi(cardNumber.substr(0, 2)) >= 51 && stoi(cardNumber.substr(0, 2)) <= 55) {
+        return "Mastercard";
+    }
+    // Visa: Starts with 4
+    else if (cardNumber.substr(0, 1) == "4") {
+        return "Visa";
+    }
+    // Diners Club: Starts with 36 or 38
+    else if (cardNumber.substr(0, 2) == "36" || cardNumber.substr(0, 2) == "38") {
+        return "Diners Club";
+    }
+    // JCB: Starts with 35
+    else if (cardNumber.substr(0, 2) == "35") {
+        return "JCB";
+    }
+    // -------- START OF NEW BRANDS --------
+    // Aura: Starts with 50
+    else if (cardNumber.rfind("50", 0) == 0) {
+        return "Aura";
+    }
+    // Maestro: Various prefixes (ex: 5018, 5020, 5038)
+    else if (cardNumber.rfind("5018", 0) == 0 || cardNumber.rfind("5020", 0) == 0 ||
+             cardNumber.rfind("5038", 0) == 0 || cardNumber.rfind("5893", 0) == 0 ||
+             cardNumber.rfind("6304", 0) == 0 || cardNumber.rfind("6759", 0) == 0 ||
+             cardNumber.rfind("6761", 0) == 0 || cardNumber.rfind("6762", 0) == 0 ||
+             cardNumber.rfind("6763", 0) == 0) {
+        return "Maestro";
+    }
+    // -------- END OF NEW BRANDS --------
+
+    // If none of the prefixes above are found
+    return "Unknown Brand";
+}
+
+// --------------------------------------------------------------------------------
+// Function Documentation: main
+//
+// Purpose:
+//   This is the main entry point of the program. It controls the execution flow.
+//
+// How it works:
+//   1. Declares a string 'cardNumber' to store user input.
+//   2. Displays a message prompting the user to enter the card number.
+//   3. Uses 'std::cin' to read the user's input and store it in the 'cardNumber' variable.
+//   4. Calls the 'identifyCardBrand' function, passing the card number as an argument.
+//   5. Stores the result (the brand name) in the 'brand' variable.
+//   6. Displays the final result to the user.
+//   7. Returns 0, indicating that the program completed successfully.
+// --------------------------------------------------------------------------------
+int main() {
+    std::string cardNumber;
+
+    std::cout << "--- Credit Card Brand Identifier ---" << std::endl;
+    std::cout << "Enter the credit card number: ";
+    std::cin >> cardNumber;
+
+    std::string brand = identifyCardBrand(cardNumber);
+
+    std::cout << "The card brand is: " << brand << std::endl;
+
+    return 0;
+}
+```
